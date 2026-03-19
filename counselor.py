@@ -12,7 +12,7 @@ with st.sidebar:
 
 # Initialize Chat History
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "system", "content": "You are a therapist that communicates with people suffering anxiety and stress and help them overcome their problems and fears and heal them and give them daily activities."}]
+    st.session_state.messages = [{"role": "system", "content": "You are a therapist that communicates with people suffering anxiety and stress and help them overcome their problems and fears and give them daily activities."}]
 
 # Display previous messages
 for message in st.session_state.messages:
