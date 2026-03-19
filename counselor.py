@@ -23,8 +23,9 @@ if "messages" not in st.session_state:
 
 # Display messages
 for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+    if message["role"] != "system":  # Only this line was missing
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
 
 # User input
 if prompt := st.chat_input("How can I help you today?"):
