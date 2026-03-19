@@ -1,7 +1,7 @@
 import streamlit as st
 from groq import Groq
 
-st.set_page_config(page_title="Groq Chatbot", page_icon="💬")
+st.set_page_config(page_title="CounselAI", page_icon="💬")
 st.title("Groq-Powered Assistant")
 
 # Sidebar for API Key and Model Selection
@@ -12,7 +12,7 @@ with st.sidebar:
 
 # Initialize Chat History
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "system", "content": "You are an aerospace engineer that have studyed the better part of your lifeand now help newcommers start there jurney."}]
+    st.session_state.messages = [{"role": "system", "content": "You are a therapist that communicates with people suffering anxiety and stress and help them overcome their problems and fears and heal them and give them daily activities."}]
 
 # Display previous messages
 for message in st.session_state.messages:
