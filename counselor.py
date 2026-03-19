@@ -50,8 +50,7 @@ for chunk in completion:
                     full_response += content
                     message_placeholder.markdown(full_response + "▌")
 
-            
-message_placeholder.markdown(full_response)
+message_placeholder.markdown(full_response):
         
         # Save assistant response to history
         st.session_state.messages.append({"role": "assistant", "content": full_response})
