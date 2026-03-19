@@ -47,13 +47,6 @@ if prompt := st.chat_input("How can I help you today?"):
 
 
 
-            # Stream response
-            for chunk in completion:
-                if chunk.choices[0].delta.content:
-                    content = chunk.choices[0].delta.content
-                    full_response += content
-                    message_placeholder.markdown(full_response + "▌")
-
             # Final response
             message_placeholder.markdown(full_response)
 
