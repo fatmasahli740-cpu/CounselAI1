@@ -44,7 +44,7 @@ completion = client.chat.completions.create(
             )
 
 # The "for" loop to catch the AI's words as they arrive
-            for chunk in completion:
+        for chunk in completion:
                 if chunk.choices[0].delta.content:
                     content = chunk.choices[0].delta.content
                     full_response += content
