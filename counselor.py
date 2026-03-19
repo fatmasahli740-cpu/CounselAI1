@@ -39,12 +39,12 @@ if prompt := st.chat_input("How can I help you today?"):
             
             # Request streaming completion
 
-            completion = client.chat.completions.create(
+             completion = client.chat.completions.create(
                 model=model,
                 messages=st.session_state.messages,
                 stream=True,
             )
-
+            
             for chunk in completion:
                 # Check if content exists to avoid 'None' errors
                 if chunk.choices[0].delta.content:
