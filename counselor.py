@@ -47,11 +47,13 @@ if prompt := st.chat_input("How can I help you today?"):
 
 completion = client.chat.completions.create(
     model=model,
-        messages=[
+            messages=[
         {"role": "system", "content": "You are a helpful assistant."},
         {"role": "user", "content": "Hello!"}]
     stream=True,
     ) 
+    
+
 
 
             # Stream response
