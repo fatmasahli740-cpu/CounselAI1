@@ -38,7 +38,7 @@ if prompt := st.chat_input("How can I help you today?"):
             
     # Request streaming completion
     # Request streaming completion                                       
-  completion = client.chat.completions.create(
+    completion = client.chat.completions.create(
       model=model,
       messages=st.session_state.messages,
       stream=True,)
