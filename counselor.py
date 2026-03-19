@@ -6,7 +6,6 @@ st.title("Mental Health Matters")
 
 # Sidebar for API Key and Model Selection
 with st.sidebar:
-    # Use the local variable 'api_key' instead of forcing st.secrets
     api_key = st.text_input("Enter Groq API Key:", type="password")
     model = st.selectbox("Choose a model:", ["llama-3.3-70b-versatile", "llama-3.1-8b-instant"])
 
@@ -25,49 +24,34 @@ if prompt := st.chat_input("How can I help you today?"):
     if not api_key:
         st.error("Please enter your Groq API Key in the sidebar!")
     else:
-        # Initialize client using the 'api_key' variable from the text_input
+        # 1. Initialize client
         client = Groq(api_key=api_key)
         
-        # Add user message to history
+        # 2. Add user message to history
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.markdown(prompt)
 
-        # Generate Assistant Response
+        # 3. Generate Assistant Response
         with st.chat_message("assistant"):
             message_placeholder = st.empty()
             full_response = ""
             
             # Request streaming completion
-            # CORRECTED: Initialize the client using the sidebar variable
-        client = Groq(api_key=api_key)
-        
-        # Add user message to history
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        with st.chat_message("user"):
-            st.markdown(prompt)
+            completion = client.chat.completions.create(
+                model=model,
+                messages=st.session_state.messages,
+                stream=True,
+            )
 
-        # Generate Assistant Response
-        with st.chat_message("assistant"):
-            message_placeholder = st.empty()
-            full_response = ""
-            
-# Ensure client is defined right before the call
-        client = Groq(api_key=api_key)
-        completion = client.chat.completions.create(
-            model=model,
-            messages=st.session_state.messages,
-            stream=True,
-        )
-
-        for chunk in completion:
+            for chunk in completion:
                 # Check if content exists to avoid 'None' errors
                 if chunk.choices[0].delta.content:
                     content = chunk.choices[0].delta.content
                     full_response += content
                     message_placeholder.markdown(full_response + "▌")
             
-              message_placeholder.markdown(full_response)
+            message_placeholder.markdown(full_response)
         
-        # Save assistant response to history
+        # 4. Save assistant response to history
         st.session_state.messages.append({"role": "assistant", "content": full_response})
