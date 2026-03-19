@@ -49,9 +49,10 @@ completion = client.chat.completions.create(
     model=model,
         messages=[
         {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "Hello!"}
+        {"role": "user", "content": "Hello!"}]
     stream=True,
-    )    
+    ) 
+
 
             # Stream response
 for chunk in completion:
