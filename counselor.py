@@ -38,7 +38,7 @@ if prompt := st.chat_input("How can I help you today?"):
             full_response = ""
             
             # Request streaming completion
-# Added the closing parenthesis ')' at the end
+
             completion = client.chat.completions.create(
                 model=model,
                 messages=st.session_state.messages,
