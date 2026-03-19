@@ -52,11 +52,13 @@ if prompt := st.chat_input("How can I help you today?"):
             message_placeholder = st.empty()
             full_response = ""
             
-            completion = client.chat.completions.create(
-                model=model,
-                messages=st.session_state.messages,
-                stream=True,
-            )
+# Ensure client is defined right before the call
+        client = Groq(api_key=api_key)
+        completion = client.chat.completions.create(
+            model=model,
+            messages=st.session_state.messages,
+            stream=True,
+        )
 
             for chunk in completion:
                 # Check if content exists to avoid 'None' errors
