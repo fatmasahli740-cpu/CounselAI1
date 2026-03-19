@@ -62,6 +62,6 @@ for chunk in completion:
 message_placeholder.markdown(full_response)
 
         # Save response
-        st.session_state.messages.append(
+st.session_state.messages.append(
             {"role": "assistant", "content": full_response}
         )
