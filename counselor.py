@@ -59,7 +59,7 @@ for chunk in completion:
                     message_placeholder.markdown(full_response + "▌")
 
             # Final response
-        message_placeholder.markdown(full_response)
+message_placeholder.markdown(full_response)
 
         # Save response
         st.session_state.messages.append(
