@@ -39,7 +39,24 @@ if prompt := st.chat_input("How can I help you today?"):
             full_response = ""
             
             # Request streaming completion
+            # CORRECTED: Initialize the client using the sidebar variable
+        client = Groq(api_key=api_key)
+        
+        # Add user message to history
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        with st.chat_message("user"):
+            st.markdown(prompt)
+
+        # Generate Assistant Response
+        with st.chat_message("assistant"):
+            message_placeholder = st.empty()
+            full_response = ""
+            
             completion = client.chat.completions.create(
+                model=model,
+                messages=st.session_state.messages,
+                stream=True,
+            )
                 model=model,
                 messages=st.session_state.messages,
                 stream=True,
