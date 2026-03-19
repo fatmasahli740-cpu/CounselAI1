@@ -36,7 +36,6 @@ if prompt := st.chat_input("How can I help you today?"):
             message_placeholder = st.empty()
             full_response = ""
             
-            # Request streaming completion
 # Request streaming completion
             completion = client.chat.completions.create(
                 model=model,
@@ -46,7 +45,6 @@ if prompt := st.chat_input("How can I help you today?"):
 
 # The "for" loop to catch the AI's words as they arrive
             for chunk in completion:
-                # FIX: Always check if delta.content exists (it can be None)
                 if chunk.choices[0].delta.content:
                     content = chunk.choices[0].delta.content
                     full_response += content
