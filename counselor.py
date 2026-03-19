@@ -44,29 +44,23 @@ if prompt := st.chat_input("How can I help you today?"):
             message_placeholder = st.empty()
             full_response = ""
 
-completion = client.chat.completions.create(
-    model=model,
-    messages=[
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "Hello!"}]
-    stream=True,
-)     
-    
-    
-
-
+            completion = client.chat.completions.create(
+                model=model,
+                messages=st.session_state.messages,
+                stream=True,
+            )
 
             # Stream response
-for chunk in completion:
+            for chunk in completion:
                 if chunk.choices[0].delta.content:
                     content = chunk.choices[0].delta.content
                     full_response += content
                     message_placeholder.markdown(full_response + "▌")
 
             # Final response
-message_placeholder.markdown(full_response)
+            message_placeholder.markdown(full_response)
 
         # Save response
-st.session_state.messages.append(
+        st.session_state.messages.append(
             {"role": "assistant", "content": full_response}
         )
