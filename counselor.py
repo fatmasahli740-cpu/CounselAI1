@@ -38,7 +38,6 @@ if prompt := st.chat_input("How can I help you today?"):
             full_response = ""
             
             # Request streaming completion
-            # FIXED: Removed the extra leading spaces here
             completion = client.chat.completions.create(
                 model=model,
                 messages=st.session_state.messages,
@@ -51,7 +50,7 @@ if prompt := st.chat_input("How can I help you today?"):
                     full_response += content
                     message_placeholder.markdown(full_response + "▌")
             
-            # Finalize the message
+            # Finalize the message (removes the cursor)
             message_placeholder.markdown(full_response)
         
         # 4. Save assistant response to history
