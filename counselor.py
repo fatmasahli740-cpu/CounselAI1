@@ -1,8 +1,8 @@
 import streamlit as st
 from groq import Groq
 
-st.set_page_config(page_title="Groq Chatbot", page_icon="💬")
-st.title("Groq-Powered Assistant")
+st.set_page_config(page_title="CounselAI", page_icon="💬")
+st.title("Mental Health Matters")
 
 # Sidebar
 with st.sidebar:
@@ -47,7 +47,9 @@ if prompt := st.chat_input("How can I help you today?"):
 
 completion = client.chat.completions.create(
     model=model,
-    messages=st.session_state.messages,
+        messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "Hello!"}
     stream=True,
 )
     
