@@ -43,11 +43,13 @@ completion = client.chat.completions.create(
                 stream=True,
             )
 
+# The "for" loop to catch the AI's words as they arrive
             for chunk in completion:
-                content = chunk.choices[0].delta.content
-                if content:
+                if chunk.choices[0].delta.content:
+                    content = chunk.choices[0].delta.content
                     full_response += content
                     message_placeholder.markdown(full_response + "▌")
+
             
             message_placeholder.markdown(full_response)
         
