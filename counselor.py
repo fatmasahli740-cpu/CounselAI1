@@ -25,7 +25,6 @@ if prompt := st.chat_input("How can I help you today?"):
         st.error("Please enter your Groq API Key in the sidebar!")
     else:
         client = Groq(api_key=api_key),
-)
         
         # Add user message to history
         st.session_state.messages.append({"role": "user", "content": prompt})
