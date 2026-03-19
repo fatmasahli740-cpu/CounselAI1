@@ -49,7 +49,6 @@ if prompt := st.chat_input("How can I help you today?"):
                 stream=True,
             )
             
-            # FIXED: Loop through the stream to display text live
             for chunk in completion:
                 if chunk.choices[0].delta.content:
                     content = chunk.choices[0].delta.content
