@@ -44,7 +44,7 @@ completion = client.chat.completions.create(
 
    messages=st.session_state.messages,                      
 
-    stream=True,
+    stream=True,)
 
 # The "for" loop to catch the AI's words as they arrive
 for chunk in completion:
