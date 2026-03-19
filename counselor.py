@@ -23,9 +23,8 @@ if "messages" not in st.session_state:
 
 # Display messages
 for message in st.session_state.messages:
-    if message["role"] != "system":  # Only this line was missing
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
 
 # User input
 if prompt := st.chat_input("How can I help you today?"):
@@ -45,14 +44,19 @@ if prompt := st.chat_input("How can I help you today?"):
             message_placeholder = st.empty()
             full_response = ""
 
+            completion = client.chat.completions.create(
+                model=model,
+                messages=st.session_state.messages,
+                stream=True,
+            )
 
-
-             # Stream response
+            # Stream response
             for chunk in completion:
                 if chunk.choices[0].delta.content:
                     content = chunk.choices[0].delta.content
                     full_response += content
                     message_placeholder.markdown(full_response + "▌")
+
             # Final response
             message_placeholder.markdown(full_response)
 
