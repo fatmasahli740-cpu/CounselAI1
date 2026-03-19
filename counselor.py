@@ -38,22 +38,21 @@ if prompt := st.chat_input("How can I help you today?"):
             full_response = ""
             
             # Request streaming completion
-
-               completion = client.chat.completions.create(
+            # FIXED: Removed the extra leading spaces here
+            completion = client.chat.completions.create(
                 model=model,
                 messages=st.session_state.messages,
                 stream=True,
             )
             
             for chunk in completion:
-                # Check if content exists to avoid 'None' errors
                 if chunk.choices[0].delta.content:
                     content = chunk.choices[0].delta.content
                     full_response += content
                     message_placeholder.markdown(full_response + "▌")
             
-            # Finalize the message (Removes the cursor ▌)
+            # Finalize the message
             message_placeholder.markdown(full_response)
         
-        # Save assistant response to history (Aligns with 'with st.chat_message')
+        # 4. Save assistant response to history
         st.session_state.messages.append({"role": "assistant", "content": full_response})
