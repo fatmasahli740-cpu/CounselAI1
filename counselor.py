@@ -41,7 +41,7 @@ if prompt := st.chat_input("How can I help you today?"):
                 model=model,
                 messages=st.session_state.messages,
                 stream=True,
-            ) # <--- This closing parenthesis is mandatory
+            ) 
 
 # The "for" loop to catch the AI's words as they arrive
             for chunk in completion:
