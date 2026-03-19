@@ -60,7 +60,7 @@ if prompt := st.chat_input("How can I help you today?"):
             stream=True,
         )
 
-            for chunk in completion:
+        for chunk in completion:
                 # Check if content exists to avoid 'None' errors
                 if chunk.choices[0].delta.content:
                     content = chunk.choices[0].delta.content
