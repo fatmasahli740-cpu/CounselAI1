@@ -51,8 +51,7 @@ completion = client.chat.completions.create(
         {"role": "system", "content": "You are a helpful assistant."},
         {"role": "user", "content": "Hello!"}
     stream=True,
-)
-    
+    )    
 
             # Stream response
 for chunk in completion:
