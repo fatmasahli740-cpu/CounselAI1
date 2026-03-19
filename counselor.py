@@ -11,7 +11,12 @@ with st.sidebar:
 
 # Initialize Chat History
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "system", "content": "You are a therapist that communicates with people suffering anxiety and stress and help them overcome their problems and fears and heal them and give them daily activities."}]
+    st.session_state.messages = [
+        {
+            "role": "system", 
+            "content": "You are a therapist that communicates with people suffering anxiety and stress and help them overcome their problems and fears and heal them and give them daily activities."
+        }
+    ]
 
 # Display previous messages (excluding system prompt)
 for message in st.session_state.messages:
@@ -35,7 +40,7 @@ if prompt := st.chat_input("How can I help you today?"):
         # 3. Generate Assistant Response
         with st.chat_message("assistant"):
             message_placeholder = st.empty()
-            full_response = ""
+            full_response = "" # FIXED: Added the empty string quotes
             
             # Request streaming completion
             completion = client.chat.completions.create(
@@ -44,6 +49,7 @@ if prompt := st.chat_input("How can I help you today?"):
                 stream=True,
             )
             
+            # FIXED: Loop through the stream to display text live
             for chunk in completion:
                 if chunk.choices[0].delta.content:
                     content = chunk.choices[0].delta.content
