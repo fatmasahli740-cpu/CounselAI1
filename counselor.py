@@ -57,10 +57,6 @@ if prompt := st.chat_input("How can I help you today?"):
                 messages=st.session_state.messages,
                 stream=True,
             )
-                model=model,
-                messages=st.session_state.messages,
-                stream=True,
-            )
 
             for chunk in completion:
                 # Check if content exists to avoid 'None' errors
