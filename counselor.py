@@ -49,7 +49,8 @@ completion = client.chat.completions.create(
                 model=model,
                 messages=st.session_state.messages,
                 stream=True,
-            )
+    )
+    
 
             # Stream response
 for chunk in completion:
