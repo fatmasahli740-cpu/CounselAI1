@@ -1,43 +1,56 @@
-import google.generativeai as genai
-import os
+import streamlit as st
+from groq import Groq
 
-# Configuration
-API_KEY = "YOUR_API_KEY"
-genai.configure(api_key=API_KEY)
+st.set_page_config(page_title="Groq Chatbot", page_icon="💬")
+st.title("Groq-Powered Assistant")
 
-# Define the Professional Counselor Persona
-SYSTEM_PROMPT = (
-    "You are a professional counselor. Your tone is empathetic, patient, "
-    "and non-judgmental. You use active listening techniques, reflect "
-    "feelings, and ask open-ended questions. You provide a safe space "
-    "for professional and personal growth while maintaining clear boundaries."
+# Sidebar for API Key and Model Selection
+with st.sidebar:
+    #api_key = st.secrets["GROQ_API_KEY"]
+    api_key = st.text_input("Enter Groq API Key:", type="password")
+    model = st.selectbox("Choose a model:", ["llama-3.3-70b-versatile", "llama-3.1-8b-instant"])
+
+# Initialize Chat History
+if "messages" not in st.session_state:
+    st.session_state.messages = [{"role": "system", "content": "You are an aerospace engineer that have studyed the better part of your lifeand now help newcommers start there jurney."}]
+
+# Display previous messages
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+# User Input
+if prompt := st.chat_input("How can I help you today?"):
+    if not api_key:
+        st.error("Please enter your Groq API Key in the sidebar!")
+    else:
+        client = Groq(api_key=st.secrets["GROQ_API_KEY"],
 )
-
-model = genai.GenerativeModel(
-    model_name="gemini-1.5-flash",
-    system_instruction=SYSTEM_PROMPT
-)
-
-def start_counseling_session():
-    chat_session = model.start_chat(history=[])
-    
-    print("-" * 50)
-    print("Gemini Counselor: Hello. I am here to listen. What is on your mind?")
-    print("(Type 'quit' to end the session)")
-    print("-" * 50)
-
-    while True:
-        user_input = input("You: ")
         
-        if user_input.lower() in ["quit", "exit", "bye"]:
-            print("\nCounselor: Take care of yourself. Goodbye.")
-            break
+        # Add user message to history
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        with st.chat_message("user"):
+            st.markdown(prompt)
 
-        try:
-            response = chat_session.send_message(user_input)
-            print(f"\nCounselor: {response.text}\n")
-        except Exception as e:
-            print(f"\n[Error]: {e}")
+        # Generate Assistant Response
+        with st.chat_message("assistant"):
+            message_placeholder = st.empty()
+            full_response = ""
+            
+            # Request streaming completion
+            completion = client.chat.completions.create(
+                model=model,
+                messages=st.session_state.messages,
+                stream=True,
+            )
 
-if __name__ == "__main__":
-    start_counseling_session()
+            for chunk in completion:
+                content = chunk.choices[0].delta.content
+                if content:
+                    full_response += content
+                    message_placeholder.markdown(full_response + "▌")
+            
+            message_placeholder.markdown(full_response)
+        
+        # Save assistant response to history
+        st.session_state.messages.append({"role": "assistant", "content": full_response})
