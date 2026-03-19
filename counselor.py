@@ -52,8 +52,8 @@ if prompt := st.chat_input("How can I help you today?"):
                     full_response += content
                     message_placeholder.markdown(full_response + "▌")
             
-            # This line must align with the 'for' loop above it
+            # Finalize the message (Removes the cursor ▌)
             message_placeholder.markdown(full_response)
         
-        # Save assistant response to history
+        # Save assistant response to history (Aligns with 'with st.chat_message')
         st.session_state.messages.append({"role": "assistant", "content": full_response})
