@@ -38,6 +38,7 @@ if prompt := st.chat_input("How can I help you today?"):
             full_response = ""
             
             # Request streaming completion
+# Request streaming completion
             completion = client.chat.completions.create(
                 model=model,
                 messages=st.session_state.messages,
@@ -51,7 +52,8 @@ if prompt := st.chat_input("How can I help you today?"):
                     full_response += content
                     message_placeholder.markdown(full_response + "▌")
             
+            # This line must align with the 'for' loop above it
             message_placeholder.markdown(full_response)
         
-        # 4. Save assistant response to history
+        # Save assistant response to history
         st.session_state.messages.append({"role": "assistant", "content": full_response})
