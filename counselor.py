@@ -2,7 +2,7 @@ import streamlit as st
 from groq import Groq
 
 st.set_page_config(page_title="CounselAI", page_icon="💬")
-st.title("Groq-Powered Assistant")
+st.title("Mental Health Matters")
 
 # Sidebar for API Key and Model Selection
 with st.sidebar:
@@ -24,8 +24,7 @@ if prompt := st.chat_input("How can I help you today?"):
     if not api_key:
         st.error("Please enter your Groq API Key in the sidebar!")
     else:
-        client = Groq(api_key=st.secrets["GROQ_API_KEY"],
-)
+        client = Groq(api_key=st.secrets["GROQ_API_KEY"],)
         
         # Add user message to history
         st.session_state.messages.append({"role": "user", "content": prompt})
