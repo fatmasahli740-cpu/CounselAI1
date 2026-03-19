@@ -31,7 +31,6 @@ if prompt := st.chat_input("How can I help you today?"):
     if not api_key:
         st.error("Please enter your Groq API Key in the sidebar!")
     else:
-        # ✅ FIX: removed comma
         client = Groq(api_key=api_key)
 
         # Add user message
@@ -47,7 +46,7 @@ if prompt := st.chat_input("How can I help you today?"):
 
 completion = client.chat.completions.create(
     model=model,
-    messages=,[
+    ,messages=[
         {"role": "system", "content": "You are a helpful assistant."},
         {"role": "user", "content": "Hello!"}]
     stream=True,
