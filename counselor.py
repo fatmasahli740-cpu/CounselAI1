@@ -59,7 +59,7 @@ if prompt := st.chat_input("How can I help you today?"):
                     message_placeholder.markdown(full_response + "▌")
 
             # Final response
-            message_placeholder.markdown(full_response)
+        message_placeholder.markdown(full_response)
 
         # Save response
         st.session_state.messages.append(
