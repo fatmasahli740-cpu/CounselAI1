@@ -45,11 +45,14 @@ if prompt := st.chat_input("How can I help you today?"):
             ) # <--- This closing parenthesis is mandatory
 
 # The "for" loop to catch the AI's words as they arrive
-for chunk in completion:
+            for chunk in completion:
+                # FIX: Always check if delta.content exists (it can be None)
                 if chunk.choices[0].delta.content:
                     content = chunk.choices[0].delta.content
                     full_response += content
+                    # Update the UI with a "typing" cursor
                     message_placeholder.markdown(full_response + "▌")
+                if chunk.choices[0].delta.content:
 
                     message_placeholder.markdown(full_response)
                     
