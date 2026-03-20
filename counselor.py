@@ -44,10 +44,11 @@ if prompt := st.chat_input("How can I help you today?"):
             message_placeholder = st.empty()
             full_response = ""
 
+            # FIXED: Changed == to = for all parameters
             completion = client.chat.completions.create(
-                model==model,
-                messages==st.session_state.messages,
-                stream==True,
+                model=model,
+                messages=st.session_state.messages,
+                stream=True,
             )
 
             for chunk in completion:
