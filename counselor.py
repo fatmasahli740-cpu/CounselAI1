@@ -45,7 +45,7 @@ if prompt := st.chat_input("How can I help you today?"):
             full_response = ""
 
             completion=client.chat.completions.create,(
-                model=model,
+                model==model,
                 messages=st.session_state.messages,
                 stream=True,
             )
