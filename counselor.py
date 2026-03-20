@@ -50,8 +50,7 @@ if prompt := st.chat_input("How can I help you today?"):
                 messages=st.session_state.messages,
                 stream=True,
             )
-
-for chunk in completion:
+    for chunk in completion:
     if hasattr(chunk.choices[0].delta, "content"):
         content = chunk.choices[0].delta.content
         if content:
