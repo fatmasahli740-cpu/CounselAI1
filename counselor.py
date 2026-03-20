@@ -44,7 +44,7 @@ if prompt := st.chat_input("How can I help you today?"):
             message_placeholder = st.empty()
             full_response = ""
 
-            # FIXED: Changed == to = for all parameters
+            # FIXED: NO comma after create!
             completion = client.chat.completions.create(
                 model=model,
                 messages=st.session_state.messages,
