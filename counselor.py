@@ -45,10 +45,10 @@ if prompt := st.chat_input("How can I help you today?"):
             full_response = ""
 
             # FIXED: NO comma after create!
-            completions = client.chat.completions.create(
-                model=model,
-                messages=st.session_state.messages,
-                stream=True,
+        completion = client.chat.completions.create(
+            model=model,
+            messages=st.session_state.messages,
+            stream=True,
             )
     for chunk in completion:
         if hasattr(chunk.choices[0].delta, "content"):
