@@ -44,21 +44,25 @@ if prompt := st.chat_input("How can I help you today?"):
             message_placeholder = st.empty()
             full_response = ""
 
-            # FIXED: NO comma after create!
-        completion = client.chat.completions.create(
-            model=model,
-            messages=st.session_state.messages,
-            stream=True,
+            # FIXED: Proper indentation - this is INSIDE the with block
+            completion = client.chat.completions.create(
+                model=model,
+                messages=st.session_state.messages,
+                stream=True,
             )
-    for chunk in completion:
-        if hasattr(chunk.choices[0].delta, "content"):
-            content = chunk.choices[0].delta.content
-        if content:
-            full_response += content
-            message_placeholder.markdown(full_response + "▌")
-
+            
+            # FIXED: This for loop should be INSIDE the with block
+            for chunk in completion:
+                if hasattr(chunk.choices[0].delta, "content"):
+                    content = chunk.choices[0].delta.content
+                    if content:
+                        full_response += content
+                        message_placeholder.markdown(full_response + "▌")
+            
+            # FIXED: This should be after the for loop
             message_placeholder.markdown(full_response)
 
+        # FIXED: This should be OUTSIDE the with block but INSIDE the else block
         st.session_state.messages.append(
             {"role": "assistant", "content": full_response}
         )
