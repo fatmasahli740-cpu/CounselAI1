@@ -51,11 +51,12 @@ if prompt := st.chat_input("How can I help you today?"):
                 stream=True,
             )
 
-            for chunk in completion:
-                if chunk.choices[0].delta.content:
-                    content = chunk.choices[0].delta.content
-                    full_response += content
-                    message_placeholder.markdown(full_response + "▌")
+for chunk in completion:
+    if hasattr(chunk.choices[0].delta, "content"):
+        content = chunk.choices[0].delta.content
+        if content:
+            full_response += content
+            message_placeholder.markdown(full_response + "▌")
 
             message_placeholder.markdown(full_response)
 
